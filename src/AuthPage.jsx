@@ -69,10 +69,21 @@ export default function AuthPage() {
         <div className="auth-brand">
           <div className="auth-brand-content">
             <div className="auth-logo animate-fade-in-up">
-              <div className="auth-logo-icon">
+              <img 
+                src="/logo.png" 
+                alt="Campus Connection Logo" 
+                className="auth-logo-image" 
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.style.display = 'none';
+                  document.getElementById('auth-fallback-icon').style.display = 'flex';
+                  document.getElementById('auth-fallback-text').style.display = 'block';
+                }}
+              />
+              <div className="auth-logo-icon" id="auth-fallback-icon" style={{ display: 'none' }}>
                 <Code2 size={32} />
               </div>
-              <h1>Campus Connection</h1>
+              <h1 id="auth-fallback-text" style={{ display: 'none' }}>Campus Connection</h1>
             </div>
             <p className="auth-tagline animate-fade-in-up delay-1">
               The all-in-one collaborative platform where student teams code, communicate, and create together.

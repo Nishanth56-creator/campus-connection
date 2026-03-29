@@ -109,6 +109,13 @@
   margin-bottom: var(--space-6);
 }
 
+.auth-logo-image {
+  height: 64px;
+  width: auto;
+  max-width: 320px;
+  object-fit: contain;
+}
+
 .auth-logo-icon {
   width: 52px;
   height: 52px;
