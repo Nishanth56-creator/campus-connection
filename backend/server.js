@@ -213,7 +213,7 @@ app.post('/api/workspaces', (req, res) => {
 
     res.json({
       success: true,
-      workspace: { id, name, description, template, ownerId, ownerName, inviteCode, techStack: techStack || [], status: 'active', members: [{ id: ownerId, name: ownerName, avatar: ownerAvatar, role: 'owner' }], createdAt: new Date().toISOString() }
+      workspace: { id, name, description, template, ownerId, ownerName, inviteCode, techStack: techStack || [], status: 'active', filesData: null, members: [{ id: ownerId, name: ownerName, avatar: ownerAvatar, role: 'owner' }], createdAt: new Date().toISOString() }
     });
   } catch (err) {
     console.error('Create workspace error:', err);
@@ -234,7 +234,15 @@ app.post('/api/workspaces/join', (req, res) => {
     const cols = result[0].columns;
     const row = result[0].values[0];
     const ws = {};
-    cols.forEach((col, i) => { ws[col] = row[i]; });
+    cols.forEach((col, i) => { 
+      if (col === 'techStack') {
+        try { ws[col] = JSON.parse(row[i]); } catch(e) { ws[col] = []; }
+      } else if (col === 'filesData') {
+        try { ws[col] = row[i] ? JSON.parse(row[i]) : null; } catch(e) { ws[col] = null; }
+      } else {
+        ws[col] = row[i]; 
+      }
+    });
 
     // Check if already a member
     const memberCheck = db.exec(`SELECT * FROM workspace_members WHERE workspaceId = '${ws.id}' AND userId = '${userId}'`);

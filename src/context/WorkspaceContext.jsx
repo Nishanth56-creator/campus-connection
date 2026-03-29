@@ -62,9 +62,14 @@ export function WorkspaceProvider({ children }) {
       });
 
       // Load files from workspace if they exist
-      if (currentWorkspace.filesData && Object.keys(currentWorkspace.filesData).length > 0) {
-        setFiles(currentWorkspace.filesData);
-        const fileNames = Object.keys(currentWorkspace.filesData);
+      let incomingFiles = currentWorkspace.filesData;
+      if (typeof incomingFiles === 'string') {
+        try { incomingFiles = JSON.parse(incomingFiles); } catch(e) { incomingFiles = null; }
+      }
+
+      if (incomingFiles && typeof incomingFiles === 'object' && Object.keys(incomingFiles).length > 0) {
+        setFiles(incomingFiles);
+        const fileNames = Object.keys(incomingFiles);
         if (fileNames.length > 0) {
           setActiveFile(fileNames[0]);
           setOpenFiles([fileNames[0]]);
