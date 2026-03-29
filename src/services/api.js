@@ -51,6 +51,14 @@ export const api = {
     getVersions: async (workspaceId) => {
       const res = await fetch(`${API_URL}/workspaces/${workspaceId}/versions`);
       return res.json();
+    },
+    saveFiles: async (workspaceId, filesData) => {
+      const res = await fetch(`${API_URL}/workspaces/${workspaceId}/files`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filesData })
+      });
+      return res.json();
     }
   },
   ai: {

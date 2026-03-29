@@ -45,10 +45,15 @@ async function initDatabase() {
       inviteCode TEXT UNIQUE,
       techStack TEXT DEFAULT '[]',
       status TEXT DEFAULT 'active',
+      filesData TEXT,
       createdAt TEXT DEFAULT (datetime('now')),
       updatedAt TEXT DEFAULT (datetime('now'))
     )
   `);
+
+  try {
+    db.run("ALTER TABLE workspaces ADD COLUMN filesData TEXT;");
+  } catch(e) { /* Column might already exist, safe to ignore */ }
 
   db.run(`
     CREATE TABLE IF NOT EXISTS workspace_members (

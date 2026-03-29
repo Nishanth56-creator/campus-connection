@@ -14,7 +14,7 @@ import DeployPanel from '../components/workspace/DeployPanel';
 import {
   Code2, ArrowLeft, MessageSquare, CheckSquare, GitBranch,
   Users, Rocket, Bot, Copy, ChevronDown, ChevronUp,
-  PanelLeftClose, PanelLeftOpen, PanelRightClose, PanelRightOpen
+  PanelLeftClose, PanelLeftOpen, PanelRightClose, PanelRightOpen, Save
 } from 'lucide-react';
 import './WorkspacePage.css';
 
@@ -22,7 +22,7 @@ export default function WorkspacePage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { workspaces, workspacesLoaded, setCurrentWorkspace, currentWorkspace } = useWorkspace();
+  const { workspaces, workspacesLoaded, setCurrentWorkspace, currentWorkspace, saveWorkspaceFiles } = useWorkspace();
   const toast = useToast();
 
   const [leftPanelOpen, setLeftPanelOpen] = useState(true);
@@ -59,6 +59,17 @@ export default function WorkspacePage() {
     setBottomPanel(prev => prev === panel ? null : panel);
   };
 
+  const handleSaveFiles = async () => {
+    if (!saveWorkspaceFiles) return;
+    const toastId = toast.info('Saving files...', { duration: 1000 });
+    const result = await saveWorkspaceFiles();
+    if (result && result.success) {
+      toast.success('Files saved successfully!');
+    } else {
+      toast.error(result?.error || 'Failed to save files');
+    }
+  };
+
   return (
     <div className="workspace-page">
       {/* Workspace Top Bar */}
@@ -81,6 +92,16 @@ export default function WorkspacePage() {
         <div className="ws-topbar-right">
           <TeamActivity />
           <div className="ws-topbar-actions">
+            <button
+              className="ws-action-btn"
+              onClick={handleSaveFiles}
+              title="Save Files"
+              style={{ color: 'var(--success)', borderColor: 'rgba(16, 185, 129, 0.2)', background: 'rgba(16, 185, 129, 0.05)' }}
+            >
+              <Save size={16} />
+              <span>Save</span>
+            </button>
+            <div className="ws-topbar-divider" style={{height: '24px'}}></div>
             <button
               className={`ws-action-btn ${bottomPanel === 'tasks' ? 'active' : ''}`}
               onClick={() => toggleBottomPanel('tasks')}

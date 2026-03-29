@@ -201,9 +201,9 @@ app.post('/api/workspaces', (req, res) => {
     const id = uuidv4();
     const inviteCode = Math.random().toString(36).substring(2, 8).toUpperCase();
 
-    db.run(`INSERT INTO workspaces (id, name, description, template, ownerId, ownerName, inviteCode, techStack)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-      [id, name, description || '', template || 'blank', ownerId, ownerName || '', inviteCode, JSON.stringify(techStack || [])]);
+    db.run(`INSERT INTO workspaces (id, name, description, template, ownerId, ownerName, inviteCode, techStack, filesData)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [id, name, description || '', template || 'blank', ownerId, ownerName || '', inviteCode, JSON.stringify(techStack || []), '{}']);
 
     db.run(`INSERT INTO workspace_members (workspaceId, userId, userName, avatar, role)
             VALUES (?, ?, ?, ?, 'owner')`,
@@ -281,6 +281,8 @@ app.get('/api/workspaces/user/:userId', (req, res) => {
       cols.forEach((col, i) => { 
         if (col === 'techStack') {
           try { ws[col] = JSON.parse(row[i]); } catch(e) { ws[col] = []; }
+        } else if (col === 'filesData') {
+          try { ws[col] = row[i] ? JSON.parse(row[i]) : null; } catch(e) { ws[col] = null; }
         } else {
           ws[col] = row[i]; 
         }
@@ -303,6 +305,25 @@ app.get('/api/workspaces/user/:userId', (req, res) => {
     res.json(workspaces);
   } catch (err) {
     console.error('Fetch workspaces error:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Update Files
+app.put('/api/workspaces/:id/files', (req, res) => {
+  const db = getDb();
+  const { filesData } = req.body;
+  try {
+    db.run(`UPDATE workspaces SET filesData = ?, updatedAt = datetime('now') WHERE id = ?`,
+      [JSON.stringify(filesData), req.params.id]);
+    saveDatabase();
+    
+    // Broadcast file update to workspace
+    io.to(`workspace:${req.params.id}`).emit('workspace:files-saved');
+    
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Save files error:', err);
     res.status(500).json({ error: 'Server error' });
   }
 });

@@ -61,6 +61,20 @@ export function WorkspaceProvider({ children }) {
         newSocket.emit('workspace:join', { workspaceId: currentWorkspace.id, user });
       });
 
+      // Load files from workspace if they exist
+      if (currentWorkspace.filesData && Object.keys(currentWorkspace.filesData).length > 0) {
+        setFiles(currentWorkspace.filesData);
+        const fileNames = Object.keys(currentWorkspace.filesData);
+        if (fileNames.length > 0) {
+          setActiveFile(fileNames[0]);
+          setOpenFiles([fileNames[0]]);
+        }
+      } else {
+        setFiles(DEFAULT_FILES);
+        setActiveFile('index.html');
+        setOpenFiles(['index.html']);
+      }
+
       // Fetch historic data
       api.workspaces.getTasks(currentWorkspace.id).then(setTasks).catch(console.error);
       api.workspaces.getMessages(currentWorkspace.id).then(setMessages).catch(console.error);
@@ -246,13 +260,31 @@ export function WorkspaceProvider({ children }) {
     setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n));
   };
 
+  const saveWorkspaceFiles = async () => {
+    if (!currentWorkspace) return { success: false, error: 'No active workspace' };
+    
+    const currentFiles = { ...files };
+    if (yDoc) {
+      Object.keys(currentFiles).forEach(filename => {
+        const text = yDoc.getText(filename).toString();
+        // If Yjs has text for this file, update the content before saving
+        if (text && text.length > 0) {
+           currentFiles[filename].content = text;
+        }
+      });
+    }
+    
+    setFiles(currentFiles);
+    return await api.workspaces.saveFiles(currentWorkspace.id, currentFiles);
+  };
+
   return (
     <WorkspaceContext.Provider value={{
       workspaces, workspacesLoaded, currentWorkspace, setCurrentWorkspace,
       createWorkspace, joinWorkspace,
       files, activeFile, openFiles,
       setActiveFile, openFileTab, closeFileTab,
-      updateFile, createFile, deleteFile,
+      updateFile, createFile, deleteFile, saveWorkspaceFiles,
       tasks, addTask, updateTask, deleteTask,
       messages, addMessage,
       versions, addVersion, restoreVersion,
