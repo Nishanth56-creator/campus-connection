@@ -45,8 +45,8 @@
 }
 
 .navbar-logo-image {
-  height: 48px;
-  max-width: 220px;
+  height: 60px;
+  max-width: 380px;
   width: auto;
   object-fit: contain;
 }
