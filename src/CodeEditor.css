@@ -1,0 +1,87 @@
+.code-editor {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.ce-tabs {
+  display: flex;
+  background: #1e1e1e;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  overflow-x: auto;
+  flex-shrink: 0;
+}
+
+.ce-tabs::-webkit-scrollbar {
+  height: 0;
+}
+
+.ce-tab {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  min-width: 100px;
+  max-width: 180px;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  color: var(--neutral-400);
+  border-right: 1px solid rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.ce-tab:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.ce-tab.active {
+  background: #1e1e1e;
+  color: white;
+  border-bottom: 2px solid var(--primary-500);
+}
+
+.ce-tab-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.ce-tab-close {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  color: var(--neutral-500);
+  opacity: 0;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.ce-tab:hover .ce-tab-close {
+  opacity: 1;
+}
+
+.ce-tab-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.ce-editor-area {
+  flex: 1;
+  overflow: hidden;
+}
+
+.ce-empty {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--neutral-500);
+  font-size: 0.9rem;
+}

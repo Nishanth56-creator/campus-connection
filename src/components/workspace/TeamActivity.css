@@ -1,0 +1,55 @@
+.team-activity {
+  display: flex;
+  align-items: center;
+}
+
+.ta-avatars {
+  display: flex;
+  align-items: center;
+}
+
+.ta-avatar-wrapper {
+  position: relative;
+  margin-left: -6px;
+}
+
+.ta-avatar-wrapper:first-child {
+  margin-left: 0;
+}
+
+.ta-avatar-wrapper .avatar {
+  border: 2px solid var(--neutral-900);
+}
+
+.ta-status {
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--neutral-900);
+}
+
+.ta-status.online {
+  background: var(--success);
+}
+
+.ta-status.offline {
+  background: var(--neutral-500);
+}
+
+.ta-more {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--neutral-400);
+  font-size: 0.6rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: -6px;
+  border: 2px solid var(--neutral-900);
+}

@@ -1,0 +1,249 @@
+/* Workspace Page Styles */
+.workspace-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--neutral-950);
+  color: white;
+  overflow: hidden;
+}
+
+/* Top Bar */
+.ws-topbar {
+  height: 48px;
+  background: var(--neutral-900);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-4);
+  flex-shrink: 0;
+}
+
+.ws-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.ws-topbar-left .btn-ghost {
+  color: var(--neutral-400);
+  font-size: 0.8rem;
+}
+
+.ws-topbar-left .btn-ghost:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.ws-topbar-divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.ws-topbar-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.ws-topbar-icon {
+  color: var(--primary-400);
+}
+
+.ws-topbar-info h2 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: white;
+}
+
+.ws-invite-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 2px var(--space-2);
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: var(--radius-sm);
+  color: var(--primary-300);
+  font-size: 0.7rem;
+  transition: all var(--transition-fast);
+}
+
+.ws-invite-btn:hover {
+  background: rgba(99, 102, 241, 0.25);
+}
+
+.ws-invite-code {
+  font-family: var(--font-mono);
+  letter-spacing: 2px;
+}
+
+.ws-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.ws-topbar-actions {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.ws-action-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--neutral-400);
+  transition: all var(--transition-fast);
+}
+
+.ws-action-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+}
+
+.ws-action-btn.active {
+  background: rgba(99, 102, 241, 0.2);
+  color: var(--primary-300);
+}
+
+/* Content Area */
+.ws-content {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Left Panel */
+.ws-left-panel {
+  width: 240px;
+  background: var(--neutral-900);
+  border-right: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  transition: width var(--transition-base);
+  overflow: hidden;
+}
+
+.ws-left-panel.collapsed {
+  width: 40px;
+}
+
+.ws-panel-toggle-bar {
+  padding: var(--space-2);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ws-panel-toggle {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  color: var(--neutral-400);
+  transition: all var(--transition-fast);
+}
+
+.ws-panel-toggle:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+}
+
+/* Center Panel */
+.ws-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* Bottom Panel */
+.ws-bottom-panel {
+  height: 260px;
+  background: var(--neutral-900);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex-shrink: 0;
+  animation: slideUp var(--transition-base) ease;
+}
+
+.ws-bottom-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.ws-bottom-header h4 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--neutral-300);
+}
+
+.ws-bottom-header .btn-ghost {
+  color: var(--neutral-400);
+}
+
+/* Right Panel */
+.ws-right-panel {
+  width: 350px;
+  background: var(--neutral-900);
+  border-left: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: hidden;
+  animation: slideInRight var(--transition-base) ease;
+}
+
+.ws-right-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.ws-right-header h4 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--neutral-200);
+}
+
+.ws-right-header .btn-ghost {
+  color: var(--neutral-400);
+}
+
+/* Chat Overlay */
+.ws-chat-overlay {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 380px;
+  height: 500px;
+  z-index: var(--z-dropdown);
+  animation: slideUp var(--transition-base) ease;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  overflow: hidden;
+  box-shadow: -4px -4px 20px rgba(0, 0, 0, 0.3);
+}
