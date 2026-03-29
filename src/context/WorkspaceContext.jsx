@@ -73,8 +73,22 @@ export function WorkspaceProvider({ children }) {
       newSocket.on('task:deleted', ({ taskId }) => setTasks(prev => prev.filter(t => t.id !== taskId)));
       newSocket.on('version:saved', (version) => setVersions(prev => [version, ...prev]));
       newSocket.on('presence:users', (users) => setOnlineUsers(users));
-      newSocket.on('member:joined', () => { 
-        // We'd ideally refresh members list here, but currently it's just local state updates
+      newSocket.on('member:joined', ({ userId, userName, avatar }) => { 
+        setCurrentWorkspace(prev => {
+          if (!prev) return prev;
+          if (prev.members.some(m => m.id === userId)) return prev;
+          return {
+            ...prev,
+            members: [...prev.members, { id: userId, name: userName, avatar, role: 'member' }]
+          };
+        });
+        setNotifications(prev => [{
+          id: Date.now().toString(),
+          title: 'New Member',
+          message: `${userName} just joined your workspace!`,
+          read: false,
+          timestamp: new Date().toISOString()
+        }, ...prev]);
       });
 
       // Connect to Yjs websocket
