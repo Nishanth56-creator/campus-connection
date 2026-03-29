@@ -12,7 +12,7 @@ function initGemini() {
   }
   try {
     genAI = new GoogleGenerativeAI(apiKey);
-    model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
     console.log('✅ Gemini AI initialized');
     return true;
   } catch (err) {

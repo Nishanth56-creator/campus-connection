@@ -261,6 +261,50 @@
   height: 48px;
 }
 
+.auth-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: var(--space-6) 0 var(--space-4) 0;
+  color: var(--neutral-400);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--neutral-200);
+}
+
+.auth-divider span {
+  padding: 0 var(--space-4);
+}
+
+.auth-google-btn {
+  width: 100%;
+  height: 48px;
+  background: white;
+  border: 1px solid var(--neutral-200);
+  color: var(--neutral-700);
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+  transition: all var(--transition-fast);
+}
+
+.auth-google-btn:hover {
+  background: var(--neutral-50);
+  border-color: var(--neutral-300);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
 .auth-demo-hint {
   margin-top: var(--space-4);
   padding: var(--space-3) var(--space-4);

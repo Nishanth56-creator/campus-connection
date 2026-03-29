@@ -53,13 +53,12 @@ export default function TopNavbar({ onMenuClick }) {
               e.target.onerror = null;
               e.target.style.display = 'none';
               document.getElementById('fallback-logo-icon').style.display = 'flex';
-              document.getElementById('fallback-logo-text').style.display = 'block';
             }}
           />
           <div className="navbar-logo-icon" id="fallback-logo-icon" style={{ display: 'none' }}>
             <Code2 size={20} />
           </div>
-          <span className="navbar-logo-text" id="fallback-logo-text" style={{ display: 'none' }}>Campus Connection</span>
+          <span className="navbar-logo-text">Campus Connection</span>
         </Link>
       </div>
 
